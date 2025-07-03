@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: TaskService
+
+  datasource:
+    url: jdbc:postgresql://localhost:5434/taskDb
+    username: taskuser
+    password: taskpass
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+server:
+  port: 8081
