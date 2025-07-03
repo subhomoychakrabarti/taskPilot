@@ -2,13 +2,15 @@ package com.taskpilot.registration.service;
 
 import com.taskpilot.registration.dto.SignInRequestEntity;
 import com.taskpilot.registration.dto.SignUpRequestEntity;
+import com.taskpilot.registration.dto.UpdateUserTaskRequest;
 import com.taskpilot.registration.exception.LoginValidationFailedException;
+import com.taskpilot.registration.exception.UserNotFoundException;
 import com.taskpilot.registration.model.User;
 import com.taskpilot.registration.model.UserBuilder;
 import com.taskpilot.registration.repotitory.UserRepository;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
@@ -40,6 +42,25 @@ public class UserServiceImpl implements UserService<User> {
             throw new LoginValidationFailedException("Email Already Taken");
         }
     }
+
+    @Override
+    public User updateExistingUserWithTaskId(UpdateUserTaskRequest updateUserTaskRequest) {
+        Optional<User> existingUser = userRepository.findByUsername(updateUserTaskRequest.getUserName());
+        if (existingUser.isPresent()) {
+            User user = existingUser.get();
+            if (updateUserTaskRequest.getTaskId() != null) {
+                Optional.ofNullable(user.getTaskIds())
+                        .orElseGet(() -> {
+                            user.setTaskIds(new ArrayList<>());
+                            return user.getTaskIds();
+                        })
+                        .add(updateUserTaskRequest.getTaskId());
+            }
+            return userRepository.save(user);
+        }
+        throw new UserNotFoundException("User not found with username: " + updateUserTaskRequest.getUserName());
+    }
+
 
     public User login(SignInRequestEntity signInRequestEntity) {
         Optional<User> user = userRepository.findByUsername(signInRequestEntity.getUserName());

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -23,8 +24,8 @@ public class User {
     @Column(unique = true, nullable = false)
     private String username;
 
-    @Column(unique = true, nullable = true)
-    private Integer taskId;
+    @Column(unique = true)
+    private List<UUID> taskIds;
 
     @Column(unique = true, nullable = false)
     private String email;

@@ -2,17 +2,15 @@ package com.taskpilot.registration.controller;
 
 import com.taskpilot.registration.dto.SignInRequestEntity;
 import com.taskpilot.registration.dto.SignUpRequestEntity;
+import com.taskpilot.registration.dto.UpdateUserTaskRequest;
 import com.taskpilot.registration.model.User;
 import com.taskpilot.registration.service.UserServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("taskPilot/register")
+@RequestMapping("registrationService/handler")
 public class UserController {
     UserServiceImpl userServiceImpl;
 
@@ -34,6 +32,13 @@ public class UserController {
     @PostMapping(path = "/login")
     public ResponseEntity<User> loginUser(@RequestBody SignInRequestEntity signInRequestEntity) {
         User user = userServiceImpl.login(signInRequestEntity);
+        return ResponseEntity.ok().body(user);
+    }
+
+
+    @PatchMapping(path = "/updateTask")
+    public ResponseEntity<User> updateUser( @RequestBody UpdateUserTaskRequest updateUserTaskRequest) {
+        User user = userServiceImpl.updateExistingUserWithTaskId(updateUserTaskRequest);
         return ResponseEntity.ok().body(user);
     }
 
