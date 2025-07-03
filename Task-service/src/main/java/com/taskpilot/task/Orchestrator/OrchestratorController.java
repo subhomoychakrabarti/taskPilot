@@ -1,5 +1,6 @@
-package com.taskpilot.registration.controller;
+package com.taskpilot.task.Orchestrator;
 
+import com.taskpilot.task.dto.ProfileUpdateRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -8,16 +9,33 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("registrationService/orchestrate/handler/")
+@RequestMapping("taskService/orchestrate/handler/")
 public class OrchestratorController {
-
     /**
-     * Endpoint to get all tasks for a user by their username.
-     * This method orchestrates calls to the registration service and task service.
+     * Endpoint to update user task using a WebClient to communicate with the registration service.
      *
-     * @param username the username of the user
-     * @return ResponseEntity containing the list of TaskBody objects or an error message
+     * @param requestEntity the request body containing user details and task ID
+     * @return ResponseEntity with a success message or error message
      */
+
+    @PostMapping("/updateUserTask")
+    public ResponseEntity<String> updateUserTask(
+            @RequestBody ProfileUpdateRequest requestEntity) {
+
+        try {
+            WebClient.create("http://localhost:8080")
+                    .patch()
+                    .uri("/registrationService/handler/updateTask")
+                    .bodyValue(requestEntity)
+                    .retrieve()
+                    .toBodilessEntity()
+                    .block();
+            return ResponseEntity.ok("Task updated for user: " + requestEntity.getUserName());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+        }
+    }
+
 
     @GetMapping("getTasksForUserByUsername/{username}")
     public ResponseEntity<?> getTasksForUserByUsername(@PathVariable String username) {
