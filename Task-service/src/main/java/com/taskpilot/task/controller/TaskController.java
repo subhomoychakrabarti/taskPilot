@@ -23,11 +23,10 @@ public class TaskController {
         return ResponseEntity.ok(service.getAllTaskDetails());
     }
 
-    @GetMapping(path = "getTask/{taskId}")
-    public ResponseEntity<Task> getTaskForId(@PathVariable UUID taskId) {
-        return ResponseEntity.ok(service.getTaskForId(taskId));
+    @PostMapping("getAllTasksByIds")
+    public ResponseEntity<List<Task>> getTasksByIds(@RequestBody List<UUID> taskIds) {
+        return ResponseEntity.ok(service.getAllTaskByIds(taskIds));
     }
-
 
     @PostMapping("createTask")
     public ResponseEntity<Task> createTodo(@RequestBody Task task) {

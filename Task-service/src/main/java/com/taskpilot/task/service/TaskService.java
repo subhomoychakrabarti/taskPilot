@@ -55,4 +55,12 @@ public class TaskService {
         return repository.findByTaskId(taskId)
                 .orElseThrow(() -> new TaskNotFoundException("Todo not found with id: " + taskId));
     }
+
+    public List<Task> getAllTaskByIds(List<UUID> taskIds) {
+        List<Task> tasks = repository.findAllByTaskIdIn(taskIds);
+        if (tasks.isEmpty()) {
+            throw new TaskNotFoundException("No tasks found for the provided IDs");
+        }
+        return tasks;
+    }
 }
