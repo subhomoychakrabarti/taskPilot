@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: registration-service
+  datasource:
+    url: jdbc:postgresql://localhost:5433/registrationDb
+    username: reguser
+    password: regpass
+  security:
+    user:
+      name: admin
+      password: admin  
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+

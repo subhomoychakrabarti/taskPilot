@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  registration-db:
+    image: postgres:latest
+    container_name: registration-db
+    environment:
+      POSTGRES_DB: registrationDb
+      POSTGRES_USER: reguser
+      POSTGRES_PASSWORD: regpass
+    ports:
+      - "5433:5432"  # Use different ports for each db
+    volumes:
+      - regdata:/var/lib/postgresql/data
+
+  task-db:
+    image: postgres:latest
+    container_name: task-db
+    environment:
+      POSTGRES_DB: taskDb
+      POSTGRES_USER: taskuser
+      POSTGRES_PASSWORD: taskpass
+    ports:
+      - "5434:5432"
+    volumes:
+      - taskdata:/var/lib/postgresql/data
+
+  reminder-db:
+    image: postgres:latest
+    container_name: reminder-db
+    environment:
+      POSTGRES_DB: reminderDb
+      POSTGRES_USER: reminduser
+      POSTGRES_PASSWORD: remindpass
+    ports:
+      - "5435:5432"
+    volumes:
+      - reminderdata:/var/lib/postgresql/data
+
+volumes:
+  regdata:
+  taskdata:
+  reminderdata:

@@ -1,0 +1,42 @@
+
+
+
+is delete
+is update
+is active
+
+keycloak db
+ID username email password
+
+
+customer info
+ID username Name email isActive .......
+
+taskservice
+username TaskID taskdetails sla isCompleted
+
+
+
+
+client -> gateway -> signup -> keycloak API -> keycloak-db && registration-service DB (data save)[customer info]
+															   -> update
+															   -> get(frontEndapp)
+client -> gateway -> signin -> keycloak API -> (validation-> username exists in customer DB && usrname exists in keycloak Db)
+													-> Jwt token  
+														-> gateway -----------> taskservice (CRUD)
+															    	jwt token
+															    				-> task create sla flag
+															    				    -> after sla if (!flag)
+															    				    	-> publish a message to kafka
+															    				    		-> Notification service(trigger)
+															    				    			-> send an email to client (task not 	completed)
+
+
+
+
+
+
+
+
+
+
