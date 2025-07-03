@@ -44,5 +44,4 @@ public class TaskController {
         service.deleteTask(taskId);
         return ResponseEntity.ok("Todo deleted successfully");
     }
-
 }
