@@ -9,6 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.UUID;
+
 @RestController
 @RequestMapping("registrationService/handler")
 public class UserController {
@@ -17,6 +20,7 @@ public class UserController {
     public UserController(UserServiceImpl userServiceImpl) {
         this.userServiceImpl = userServiceImpl;
     }
+
     /**
      * Endpoint to register a new user.
      *
@@ -37,10 +41,17 @@ public class UserController {
 
 
     @PatchMapping(path = "/updateTask")
-    public ResponseEntity<User> updateUser( @RequestBody UpdateUserTaskRequest updateUserTaskRequest) {
+    public ResponseEntity<User> updateUser(@RequestBody UpdateUserTaskRequest updateUserTaskRequest) {
         User user = userServiceImpl.updateExistingUserWithTaskId(updateUserTaskRequest);
         return ResponseEntity.ok().body(user);
     }
 
-
+    @GetMapping(path = "/getAllTasksIDForUser/{userName}")
+    public ResponseEntity<List<UUID>> getUserTasksId(@PathVariable String userName) {
+        List<UUID> taskIds = userServiceImpl.getAllTasksIdForUser(userName);
+        if (taskIds.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(taskIds);
+        }
+        return ResponseEntity.ok().body(taskIds);
+    }
 }

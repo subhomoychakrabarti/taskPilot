@@ -51,11 +51,6 @@ public class TaskService {
         repository.deleteByTaskId(id);
     }
 
-    public Task getTaskForId(UUID taskId) {
-        return repository.findByTaskId(taskId)
-                .orElseThrow(() -> new TaskNotFoundException("Todo not found with id: " + taskId));
-    }
-
     public List<Task> getAllTaskByIds(List<UUID> taskIds) {
         List<Task> tasks = repository.findAllByTaskIdIn(taskIds);
         if (tasks.isEmpty()) {

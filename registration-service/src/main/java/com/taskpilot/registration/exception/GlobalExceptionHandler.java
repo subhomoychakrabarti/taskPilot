@@ -11,4 +11,14 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleLoginException(LoginValidationFailedException e) {
         return ResponseEntity.badRequest().body(e.getMessage());
     }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<String> handleUserNotFoundException(UserNotFoundException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
+
+
+
+
+
 }

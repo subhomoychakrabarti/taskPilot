@@ -11,7 +11,9 @@ import com.taskpilot.registration.repotitory.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService<User> {
@@ -59,6 +61,18 @@ public class UserServiceImpl implements UserService<User> {
             return userRepository.save(user);
         }
         throw new UserNotFoundException("User not found with username: " + updateUserTaskRequest.getUserName());
+    }
+
+    @Override
+    public List<UUID> getAllTasksIdForUser(String userName) {
+        Optional<User> user = userRepository.findByUsername(userName);
+        if (user.isPresent()) {
+            List<UUID> taskIds = user.get().getTaskIds();
+            if (taskIds != null && !taskIds.isEmpty()) {
+                return taskIds;
+            }
+        }
+        throw new UserNotFoundException("User not found with username: " + userName);
     }
 
 
