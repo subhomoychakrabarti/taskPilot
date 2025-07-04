@@ -23,7 +23,7 @@ public class OrchestratorController {
             @RequestBody ProfileUpdateRequest requestEntity) {
 
         try {
-            WebClient.create("http://localhost:8080")
+            WebClient.create("http://localhost:8081")
                     .patch()
                     .uri("/registrationService/handler/updateTask")
                     .bodyValue(requestEntity)
@@ -41,7 +41,7 @@ public class OrchestratorController {
     public ResponseEntity<?> getTasksForUserByUsername(@PathVariable String username) {
         try {
             // Step 1: Call existing controller/service to get the list of Task IDs
-            List<UUID> taskIds = WebClient.create("http://localhost:8080")
+            List<UUID> taskIds = WebClient.create("http://localhost:8081")
                     .get()
                     .uri("/registrationService/handler/getAllTasksIDForUser/" + username)
                     .retrieve()
@@ -54,7 +54,7 @@ public class OrchestratorController {
             }
 
             // Step 2: Use the taskIds to call the Task Service and get task details
-            List<TaskBody> taskDetails = WebClient.create("http://localhost:8081")
+            List<TaskBody> taskDetails = WebClient.create("http://localhost:8082")
                     .post()
                     .uri("taskService/handler/getAllTasksByIds")
                     .bodyValue(taskIds)

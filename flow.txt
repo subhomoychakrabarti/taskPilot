@@ -10,7 +10,7 @@ ID username email password
 
 
 customer info
-ID username Name email isActive .......
+ID username Name email isActive List<taskId>.......
 
 taskservice
 username TaskID taskdetails sla isCompleted
@@ -29,6 +29,7 @@ client -> gateway -> signin -> keycloak API -> (validation-> username exists in 
 															    				    -> after sla if (!flag)
 															    				    	-> publish a message to kafka
 															    				    		-> Notification service(trigger)
+															    				    			-> send an email to client (task not 	completed)
 															    				    			-> send an email to client (task not 	completed)
 
 

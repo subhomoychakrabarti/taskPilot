@@ -25,19 +25,6 @@ services:
     volumes:
       - taskdata:/var/lib/postgresql/data
 
-  reminder-db:
-    image: postgres:latest
-    container_name: reminder-db
-    environment:
-      POSTGRES_DB: reminderDb
-      POSTGRES_USER: reminduser
-      POSTGRES_PASSWORD: remindpass
-    ports:
-      - "5435:5432"
-    volumes:
-      - reminderdata:/var/lib/postgresql/data
-
 volumes:
   regdata:
   taskdata:
-  reminderdata:
