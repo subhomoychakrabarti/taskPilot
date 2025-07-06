@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration>
+    <appender name="console" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} %-5p [%c{1}] %m%n"/>
+        </layout>
+    </appender>
+
+    <root>
+        <priority value="info"/>
+        <appender-ref ref="console"/>
+    </root>
+
+    <logger name="org.springframework.cloud.gateway">
+        <level value="debug"/>
+    </logger>
+    <logger name="reactor.netty">
+        <level value="debug"/>
+    </logger>
+    <logger name="com.taskpilot.gateway">
+        <level value="debug"/>
+    </logger>
+</log4j:configuration> 
